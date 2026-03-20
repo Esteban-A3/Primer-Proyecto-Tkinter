@@ -1,15 +1,17 @@
-def factores(num):
-    if num==0:
-        return "No posee Factores"
+def analisis_pares(num):
+    if not isinstance(num,int):
+        return "Error: Por favor introducir un número entero"
+    if num<=0:
+        return  "No posee factores positivos"
     else:
-        return factores_aux(abs(num),1)
+        return analisis_pares_aux(num,1)
 
-def factores_aux(num, i):
-    if i <= num and num % i == 0 and i <=num//i:
-        return (((i, num//i),) + factores_aux(num, i+1))
-
-    elif i>num:
+def analisis_pares_aux(num, i):
+    if i > int(num**0.5):
         return ()
 
+    elif num%i == 0:
+        return (((i, num//i),) + analisis_pares_aux(num, i+1))
+
     else:
-        return factores_aux(num,i+1)
+        return analisis_pares_aux(num,i+1)
