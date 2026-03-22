@@ -1,5 +1,5 @@
 import tkinter as tk
-
+#Ventana Analizxador
 def analisis_pares(num):
     if not isinstance(num,int):
         return "Error: Por favor introducir un número entero"
@@ -25,17 +25,15 @@ ventana_a.config(bg="tomato")
 ventana_a.attributes(alpha=0.95)
 ventana_a.resizable(False,False)
 
-factorizar= tk.Frame(ventana_a)
-factorizar.config(bg="indianred1", bd=10, width=450, height=200)
+analizar= tk.Frame(ventana_a)
+analizar.config(bg="indianred1", bd=10, width=450, height=200)
 
-m_bienvenida= tk.Label(factorizar, text="Introdusca un número entero para analizar")
+m_bienvenida= tk.Label(analizar, text="Introdusca un número entero para analizar")
 m_bienvenida.config(bg="indianred1",fg="gold", font=("Impact",15))
 
-entrada_a= tk.Entry(factorizar)
+entrada_a= tk.Entry(analizar)
 entrada_a.config(bg="azure2", fg="gray25", font=("Impact",12))
 entrada_a.insert(0, "Ejemplo: 10")
-
-from tkinter import messagebox
 
 def pares():
     valor = entrada_a.get()
@@ -50,14 +48,14 @@ def pares():
         resultado.config(text="❌ Entrada inválida, debe ser un número entero")
 
 
-analizar=tk.Button(factorizar, text="Analizar", command=pares)
+analizar=tk.Button(analizar, text="Analizar", command=pares)
 analizar.config(bg="azure2", fg="gray23", font=("Impact", 12))
 
-resultado=tk.Label(factorizar, text="")
+resultado=tk.Label(analizar, text="")
 resultado.config(bg="indianred1", fg="gold", font=("impact", 13, "italic"), wraplength=350, justify="center")
 
-factorizar.place(relx=0.5,rely=0.5, anchor="center")
-factorizar.pack_propagate(False)
+analizar.place(relx=0.5,rely=0.5, anchor="center")
+analizar.pack_propagate(False)
 m_bienvenida.pack()
 entrada_a.pack()
 resultado.pack()
