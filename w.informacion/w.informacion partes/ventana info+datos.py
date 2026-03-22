@@ -10,12 +10,18 @@ ventana_i.attributes(alpha=0.95)
 block_nce = tk.Frame(ventana_i, bg="light cyan1", bd=5, width=400, height=100)
 block_bio = tk.Frame(ventana_i, bg="light cyan2", bd=5, width=400, height=200)
 block_music = tk.Frame(ventana_i, bg="light cyan3", bd=5, width=400, height=100)
-block_foto = tk.Frame(ventana_i, bg="pale green1", bd=8, width=200, height=200)
-block_l = tk.Frame(ventana_i, bg="pale green2", bd=8, width=250, height=200)
+block_foto = tk.Frame(ventana_i, bg="pale green1", bd=8, width=150, height=200)
+block_l = tk.Frame(ventana_i, bg="pale green2", bd=8, width=250, height=150)
 
 nombre = tk.Label(block_nce, text="Esteban Sánchez Ledezma", bg="light cyan1", fg="grey60", font=("Impact", 15))
 carnet = tk.Label(block_nce, text="2026108570", bg="light cyan1", fg="grey60", font=("Impact", 15))
 edad = tk.Label(block_nce, text="19 años", bg="light cyan1", fg="grey60", font=("Impact", 15))
+
+programadorM = tk.PhotoImage(file="w.informacion partes/Programador.png")
+sideP= tk.Label(block_foto, image=programadorM)
+lugar= tk.PhotoImage(file="w.informacion partes/lugar.png")
+sideL= tk.Label(block_l, image=lugar)
+textoL = tk.Label(block_l, text="Lugar donde vive:", bg="pale green2", fg="grey60", font=("Impact", 15) )
 
 texto = """Soy técnico electromecánico graduado y actualmente estudiante de Ingeniería en Computadores en el Tecnológico de Costa Rica. 
 Además, he complementado mi formación en el área de redes, alcanzando el nivel de CCNA 3 con certificación académica. 
@@ -45,5 +51,8 @@ block_l.propagate(False)
 nombre.pack()
 carnet.pack()
 edad.pack()
+sideP.pack()
+textoL.pack()
+sideL.pack()
 
 ventana_i.mainloop()
