@@ -25,37 +25,41 @@ ventana_a.config(bg="tomato")
 ventana_a.attributes(alpha=0.95)
 ventana_a.resizable(False,False)
 
-analizar= tk.Frame(ventana_a)
-analizar.config(bg="indianred1", bd=10, width=450, height=200)
+sideanalizar= tk.Frame(ventana_a)
+sideanalizar.config(bg="indianred1", bd=10, width=450, height=200)
 
-m_bienvenida= tk.Label(analizar, text="Introdusca un número entero para analizar")
+m_bienvenida= tk.Label(sideanalizar, text="Introdusca un número entero para analizar")
 m_bienvenida.config(bg="indianred1",fg="gold", font=("Impact",15))
 
-entrada_a= tk.Entry(analizar)
+entrada_a= tk.Entry(sideanalizar)
 entrada_a.config(bg="azure2", fg="gray25", font=("Impact",12))
 entrada_a.insert(0, "Ejemplo: 10")
 
 def pares():
     valor = entrada_a.get()
-    if valor == "Ejemplo: 10" or valor.strip() == "":
-        resultado.config(text="⚠️ Por favor ingrese un número válido")
+    if not valor or valor == "Ejemplo: 10":
+        resultado.config(text="⚠️ Por favor ingrese un número")
         return
-    try:
+    if valor.isdigit():
         num = int(valor)
-        res = analisis_pares(num)
-        resultado.config(text=f"Factores de {num} = {res}")
-    except ValueError:
-        resultado.config(text="❌ Entrada inválida, debe ser un número entero")
+        if num > 100000:
+            resultado.config(text="⚠️ Límite excedido: Intenta con un numero menor (Máx: 100,000)") #Limite para proteger interfaz. El verdadero limite de la funcion es 1 millon
+            return
+        else:
+            res = analisis_pares(num)
+            resultado.config(text=f"Factores de {num} = {res}")
+    else:
+        resultado.config(text="❌ Entrada inválida, debe ser un entero positivo")
 
 
-analizar=tk.Button(analizar, text="Analizar", command=pares)
+analizar=tk.Button(sideanalizar, text="Analizar", command=pares)
 analizar.config(bg="azure2", fg="gray23", font=("Impact", 12))
 
-resultado=tk.Label(analizar, text="")
+resultado=tk.Label(sideanalizar, text="")
 resultado.config(bg="indianred1", fg="gold", font=("impact", 13, "italic"), wraplength=350, justify="center")
 
-analizar.place(relx=0.5,rely=0.5, anchor="center")
-analizar.pack_propagate(False)
+sideanalizar.place(relx=0.5,rely=0.5, anchor="center")
+sideanalizar.pack_propagate(False)
 m_bienvenida.pack()
 entrada_a.pack()
 resultado.pack()
