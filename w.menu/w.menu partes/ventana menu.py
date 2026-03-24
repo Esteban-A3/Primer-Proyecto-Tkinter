@@ -8,7 +8,7 @@ ventana_m.resizable(False,False)
 ventana_m.attributes(alpha=0.95)
 
 Bienvenida = tk.Label(text="Bienvenido", bg="aquamarine",fg="White", font=("Impact", 50))
-Mensaje = tk.Label(text="Selecciona una boton para abrir una pestalla", bg="aquamarine",fg="White", font=("Impact", 25))
+Mensaje = tk.Label(text="Selecciona un botón para abrir una pestalla", bg="aquamarine",fg="White", font=("Impact", 25))
 BlockVentanas = tk.Frame(ventana_m)
 
 
