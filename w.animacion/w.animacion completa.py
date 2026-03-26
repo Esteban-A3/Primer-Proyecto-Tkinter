@@ -17,7 +17,7 @@ ATvelocidad = tk.Label(block_texto, text="Ajusta la barra para configurar la vel
 def cerraranimacion():
     ventana_a.destroy()
 
-BotonCA = tk.Button(ventana_a, text="Cerrar", command=cerraranimacion, bg="light cyan1",fg="grey60", font=("Impact", 12) )
+BotonCA = tk.Button(ventana_a, text="Cerrar", command=cerraranimacion, bg="light cyan1",fg="grey60", font=("Impact", 12), relief=tk.RAISED)
 barravelocidad = tk.Scale(block_velocidad, from_=0, to=85, orient=tk.HORIZONTAL, length=300,tickinterval=10, bg="olivedrab1", fg="grey60", font=("Impact", 12))
 barravelocidad.set(50)
 
