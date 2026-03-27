@@ -84,6 +84,7 @@ def abrir_ventana_a():
     sideanalizar= tk.Frame(ventana_a)
     sideanalizar.config(bg="indianred1", bd=10, width=450, height=200)
 
+    ATBienvenida=tk.Label(ventana_a,text="Bienvenido al Analizador",bg="Tomato", fg="White", font=("Impact", 24) )
     m_bienvenida= tk.Label(sideanalizar, text="Introdusca un número entero para analizar")
     m_bienvenida.config(bg="indianred1",fg="gold", font=("Impact",15))
 
@@ -115,6 +116,7 @@ def abrir_ventana_a():
 
     BotonCA = tk.Button(ventana_a, text="Cerrar", command=cerraranalizador, bg="white", fg="grey60", font=("Impact", 12), relief=tk.RAISED)
 
+    ATBienvenida.pack()
     sideanalizar.place(relx=0.5,rely=0.5, anchor="center")
     sideanalizar.pack_propagate(False)
     m_bienvenida.pack()
@@ -148,7 +150,7 @@ def abrir_ventana_i():
     def cerrarVentanaInformacion():
         ventana_i.destroy()
 
-    botonCi = tk.Button(ventana_i,text="X",command= cerrarVentanaInformacion)
+    botonCi = tk.Button(ventana_i,text="Cerrar",command= cerrarVentanaInformacion, bg="white", fg="grey60", font=("Impact", 12), relief=tk.RAISED)
 
     nombre = tk.Label(block_nce, text="Esteban Sánchez Ledezma", bg="light cyan1", fg="grey60", font=("Impact", 15))
     carnet = tk.Label(block_nce, text="2026108570", bg="light cyan1", fg="grey60", font=("Impact", 15))
@@ -203,7 +205,7 @@ def abrir_ventana_i():
     block_l.place(relx=0.80, rely=0.70, anchor="center")
     block_l.propagate(False)
 
-    botonCi.place(x=670, y=8)
+    botonCi.place(x=530, y=440)
     nombre.pack()
     carnet.pack()
     edad.pack()
@@ -237,8 +239,8 @@ def abrir_ventana_an():
     block_texto= tk.Frame(ventana_an, bg="olivedrab1")
     block_velocidad = tk.Frame(ventana_an, bg="olivedrab1")
 
-    ATBienvenida=tk.Label(ventana_an,text="Bienvenido a animación",bg="olivedrab1", fg="grey60", font=("Impact", 18) )
-    ATvelocidad = tk.Label(block_texto, text="Ajusta la barra para configurar la velocidad",bg="olivedrab1", fg="grey60", font=("Impact", 15) )
+    ATNBienvenida=tk.Label(ventana_an,text="Bienvenido a animación",bg="olivedrab1", fg="grey60", font=("Impact", 18) )
+    ATNvelocidad = tk.Label(block_texto, text="Ajusta la barra para configurar la velocidad",bg="olivedrab1", fg="grey60", font=("Impact", 15) )
 
     def cerraranimacion():
         ventana_an.destroy()
@@ -256,7 +258,7 @@ def abrir_ventana_an():
     p2_id = block_pelotas.create_oval(x2-r, y2-r, x2+r, y2+r, fill="blue", outline="black")
 
     def mover():
-        global x1, y1, dx1, dy1, x2, y2, dx2, dy2
+        nonlocal x1, y1, dx1, dy1, x2, y2, dx2, dy2 
 
         x1 += dx1
         y1 += dy1
@@ -271,13 +273,15 @@ def abrir_ventana_an():
             dx2 *= -1
         if y2 - r <= 0 or y2 + r >= ALTO_C: 
             dy2 *= -1
-
-        distancia = (dx1**2 + dy1**2)**0.5
-        if distancia < (r * 2):
+        
+        if (x2 - x1)**2 + (y2 - y1)**2 <= (2*r)**2:
             dx1, dx2 = dx2, dx1
             dy1, dy2 = dy2, dy1
 
-            x1 += dx1; y1 += dy1; x2 += dx2; y2 += dy2
+            x1 += dx1 * 2
+            y1 += dy1 * 2
+            x2 += dx2 * 2
+            y2 += dy2 * 2
 
         block_pelotas.coords(p1_id, x1-r, y1-r, x1+r, y1+r)
         block_pelotas.coords(p2_id, x2-r, y2-r, x2+r, y2+r)
@@ -291,13 +295,13 @@ def abrir_ventana_an():
         block_pelotas.after(espera, mover)
 
 
-    ATBienvenida.pack()
+    ATNBienvenida.pack()
     block_pelotas.pack()
     block_pelotas.propagate(False)
     block_texto.pack()
     block_velocidad.pack()
 
-    ATvelocidad.pack()
+    ATNvelocidad.pack()
     barravelocidad.pack()
     BotonCAN.pack()
     mover()
