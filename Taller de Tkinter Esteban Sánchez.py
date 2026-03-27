@@ -2,14 +2,18 @@ import tkinter as tk
 import pygame as pg
 from tkinter import Toplevel
 
+#Proyecto de Esteban Alejandro Sanchez Ledezma
+#Consejo: Si esta en visual code use los corchetes para cerrar las funciones, asi se puede analizar mejor el codigo
+
+
+#Funcion de analisis de pares
 def analisis_pares(num):
-    if not isinstance(num,int):
+    if not isinstance(num,int): #Se podria quitar estas restrincciones ya que la ventana ya las aplica pero las dejo para no danar la funcion
         return "Error: Por favor introducir un número entero"
     if num<=0:
         return  "No posee factores positivos"
     else:
         return analisis_pares_aux(num,1)
-
 def analisis_pares_aux(num, i):
     if i > int(num**0.5):
         return ()
@@ -20,8 +24,9 @@ def analisis_pares_aux(num, i):
     else:
         return analisis_pares_aux(num,i+1)
 
+
 pg.mixer.init()
-paused = False
+paused = False 
 music = False
 
 def playmusic():
@@ -37,21 +42,18 @@ def playmusic():
             pg.mixer.music.play()
     else:
         ()
-
 def pausemusic():
     global paused
     global music
     pg.mixer.music.pause()
     paused=True
     music=False
-
 def stopmusic():
     global paused
     global music
     pg.mixer.music.stop()
     paused=False
     music=False
-
 def restardmusic():
     global paused
     global music
@@ -62,8 +64,9 @@ def restardmusic():
     music = True
 
 
-ventana_actual = None
+ventana_actual = None   #variable para saber si hay una ventana activa
 
+#Ventana de Analisis
 def abrir_ventana_a():
     global ventana_actual
     
@@ -121,7 +124,7 @@ def abrir_ventana_a():
     BotonCA.place(relx=0.50,rely=0.90, anchor="center")
 
     ventana_actual = ventana_a
-
+#Ventana de Informacion
 def abrir_ventana_i():
     global ventana_actual
     
@@ -216,14 +219,24 @@ def abrir_ventana_i():
     botonPause.pack(side="left",padx=5)
     botonstop.pack(side="left", padx=5)
     ventana_actual = ventana_i
+#Ventana de Animcacion
+def abrir_ventana_an():
+    global ventana_actual    
+    
+    if ventana_actual is not None and ventana_actual.winfo_exists():
+        ventana_actual.destroy()
 
-
-
-
+    ventana_an = Toplevel(ventana_m)
+    ventana_an.title("Animación")
+    ventana_an.geometry("700x500")
+    ventana_an.config(bg="olivedrab1")
+    ventana_an.resizable(False,False)
+    ventana_an.attributes(alpha=0.95)
 
 def cerrarmenu():
     ventana_m.destroy()
 
+#Ventana de Menu
 ventana_m = tk.Tk()
 ventana_m.title("Menu")
 ventana_m.geometry("900x500")
@@ -242,7 +255,7 @@ BlockVentanas.pack(pady=20)
 
 botonwA = tk.Button(BlockVentanas, width=25, height=10, text="Analizador de Números", bg="tomato", fg="White", font=("Impact"), command=lambda: abrir_ventana_a())
 botonwI = tk.Button(BlockVentanas, width=25, height=10, text="Información del programador", bg="sky blue", fg="White", font=("Impact"), command=lambda: abrir_ventana_i())
-BotonwP = tk.Button(BlockVentanas, width=25, height=10, text="Animación", bg="olivedrab1", fg="White", font=("Impact"), command=lambda: abrir_ventana())
+BotonwP = tk.Button(BlockVentanas, width=25, height=10, text="Animación", bg="olivedrab1", fg="White", font=("Impact"), command=lambda: abrir_ventana_an())
 
 
 botonwA.grid(row=0, column=0, padx=10)
