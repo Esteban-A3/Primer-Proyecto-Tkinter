@@ -1,5 +1,4 @@
 import tkinter as tk
-import math
 
 ventana_a = tk.Tk()
 ventana_a.title("Animación")
@@ -32,24 +31,30 @@ p1_id = block_pelotas.create_oval(x1-r, y1-r, x1+r, y1+r, fill="red", outline="b
 p2_id = block_pelotas.create_oval(x2-r, y2-r, x2+r, y2+r, fill="blue", outline="black")
 
 def mover():
-    global x1, y1, dx1, dy1, x2, y2, dx2, dy2
+    global x1, y1, dx1, dy1, x2, y2, dx2, dy2 
 
     x1 += dx1
     y1 += dy1
-    if x1 - r <= 0 or x1 + r >= ANCHO_C: dx1 *= -1
-    if y1 - r <= 0 or y1 + r >= ALTO_C: dy1 *= -1
+    if x1 - r <= 0 or x1 + r >= ANCHO_C: 
+        dx1 *= -1
+    if y1 - r <= 0 or y1 + r >= ALTO_C: 
+        dy1 *= -1
 
     x2 += dx2
     y2 += dy2
-    if x2 - r <= 0 or x2 + r >= ANCHO_C: dx2 *= -1
-    if y2 - r <= 0 or y2 + r >= ALTO_C: dy2 *= -1
-
-    distancia = math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
-    if distancia < (r * 2):
+    if x2 - r <= 0 or x2 + r >= ANCHO_C: 
+        dx2 *= -1
+    if y2 - r <= 0 or y2 + r >= ALTO_C: 
+        dy2 *= -1
+        
+    if (x2 - x1)**2 + (y2 - y1)**2 <= (2*r)**2:
         dx1, dx2 = dx2, dx1
         dy1, dy2 = dy2, dy1
 
-        x1 += dx1; y1 += dy1; x2 += dx2; y2 += dy2
+        x1 += dx1 * 2
+        y1 += dy1 * 2
+        x2 += dx2 * 2
+        y2 += dy2 * 2
 
     block_pelotas.coords(p1_id, x1-r, y1-r, x1+r, y1+r)
     block_pelotas.coords(p2_id, x2-r, y2-r, x2+r, y2+r)
@@ -59,8 +64,7 @@ def mover():
         espera = 100
     else:
         espera = int(100 - valor_barra + 1) 
-
-    block_pelotas.after(espera, mover)
+        block_pelotas.after(espera, mover)
 
 ATBienvenida.pack()
 block_pelotas.pack()
