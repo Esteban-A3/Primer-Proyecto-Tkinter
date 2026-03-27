@@ -56,7 +56,7 @@ def restardmusic():
     global paused
     global music
     pg.mixer.music.stop()
-    pg.mixer.music.load("w.informacion partes/Me and Michael.mp3")
+    pg.mixer.music.load("Proyecto Multimedia/Me and Michael.mp3")
     pg.mixer.music.play()
     paused = False
     music = True
@@ -69,6 +69,7 @@ def abrir_ventana_a():
     
     if ventana_actual is not None and ventana_actual.winfo_exists():
         ventana_actual.destroy()
+        stopmusic()     #Por si se dejo la musica activa en la ventana informacion
     
     ventana_a = Toplevel(ventana_m)
     ventana_a.title("Analizador de Números")
@@ -152,8 +153,11 @@ def abrir_ventana_i():
 
     programadorM = tk.PhotoImage(file="Proyecto Multimedia/Programador.png")
     sideP= tk.Label(block_foto, image=programadorM)
+    sideP.image = programadorM
+
     lugar= tk.PhotoImage(file="Proyecto Multimedia/lugar.png")
     sideL= tk.Label(block_l, image=lugar)
+    sideL.image = lugar 
     textoL = tk.Label(block_l, text="Lugar donde vive:", bg="pale green2", fg="grey60", font=("Impact", 15) )
 
     textobiografia = """Soy técnico electromecánico graduado y actualmente estudiante de Ingeniería en Computadores en el Tecnológico de Costa Rica. 
@@ -171,8 +175,11 @@ def abrir_ventana_i():
     Canción: Me and Michael"""
 
     textoM = tk.Label(block_music, text=bandaygenero, bg="light cyan3", fg="grey60", font=("Impact", 12))
+
     Ibanda = tk.PhotoImage(file="Proyecto Multimedia/banda.png")
     sideIb = tk.Label(musiccentertext, image=Ibanda)
+    sideIb.image = Ibanda 
+
     botonBack = tk.Button(musiccentertext, text="⏮",command=restardmusic)
     botonPlay = tk.Button(musiccentertext, text="▶", command=playmusic)
     botonPause = tk.Button(musiccentertext, text="⏸", command=pausemusic)
