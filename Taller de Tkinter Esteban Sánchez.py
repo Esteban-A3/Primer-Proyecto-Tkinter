@@ -339,6 +339,6 @@ botonwI.grid(row=0, column=1, padx=10)
 BotonwP.grid(row=0, column=2, padx=10)
 
 BotonCM = tk.Button(ventana_m, text="Cerrar", command=cerrarmenu, bg="white", fg="grey60", font=("Impact", 12), relief=tk.RAISED)
-BotonCM.pack(pady=20)
+BotonCM.pack(pady=5)
 
 ventana_m.mainloop()
