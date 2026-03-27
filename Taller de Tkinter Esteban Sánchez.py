@@ -5,7 +5,6 @@ from tkinter import Toplevel
 #Proyecto de Esteban Alejandro Sanchez Ledezma
 #Consejo: Si esta en visual code use los corchetes para cerrar las funciones, asi se puede analizar mejor el codigo
 
-
 #Funcion de analisis de pares
 def analisis_pares(num):
     if not isinstance(num,int): #Se podria quitar estas restrincciones ya que la ventana ya las aplica pero las dejo para no danar la funcion
@@ -66,14 +65,18 @@ def restardmusic():
 
 ventana_actual = None   #variable para saber si hay una ventana activa
 
+#Funcion para cambiar de ventana y para que no haya mas de una abierta
+def cambiar_ventana(func):
+    global ventana_actual
+    if ventana_actual and ventana_actual.winfo_exists():
+        ventana_actual.destroy()
+        stopmusic()     #Por si se dejo la musica activa en la ventana informacion
+    func()
+
 #Ventana de Analisis
 def abrir_ventana_a():
     global ventana_actual
-    
-    if ventana_actual is not None and ventana_actual.winfo_exists():
-        ventana_actual.destroy()
-        stopmusic()     #Por si se dejo la musica activa en la ventana informacion
-    
+
     ventana_a = Toplevel(ventana_m)
     ventana_a.title("Analizador de Números")
     ventana_a.geometry("600x400")
@@ -111,8 +114,12 @@ def abrir_ventana_a():
 
     resultado=tk.Label(sideanalizar, text="")
     resultado.config(bg="indianred1", fg="gold", font=("impact", 13, "italic"), wraplength=350, justify="center")
+    
     def cerraranalizador():
+        global ventana_actual
         ventana_a.destroy()
+        ventana_a.destroy()
+        ventana_actual = None
 
     BotonCA = tk.Button(ventana_a, text="Cerrar", command=cerraranalizador, bg="white", fg="grey60", font=("Impact", 12), relief=tk.RAISED)
 
@@ -124,15 +131,13 @@ def abrir_ventana_a():
     resultado.pack()
     analizar.pack()
     BotonCA.place(relx=0.50,rely=0.90, anchor="center")
+    ventana_a.protocol("WM_DELETE_WINDOW", cerraranalizador)
 
-    ventana_actual = ventana_a
+    ventana_actual = ventana_a   #Para que no haya mas de una ventana abierta
 #Ventana de Informacion
 def abrir_ventana_i():
     global ventana_actual
-    
-    if ventana_actual is not None and ventana_actual.winfo_exists():
-        ventana_actual.destroy()
-    
+
     ventana_i = Toplevel(ventana_m)
     ventana_i.title("Ventana de información")
     ventana_i.geometry("700x500")
@@ -140,15 +145,17 @@ def abrir_ventana_i():
     ventana_i.resizable(False, False)
     ventana_i.attributes(alpha=0.95)
 
-    block_nce = tk.Canvas(ventana_i, bg="light cyan1", bd=5, width=400, height=100)
-    block_bio = tk.Canvas(ventana_i, bg="light cyan2", bd=5, width=400, height=200)
+    block_nce = tk.Frame(ventana_i, bg="light cyan1", bd=5, width=400, height=100)
+    block_bio = tk.Frame(ventana_i, bg="light cyan2", bd=5, width=400, height=200)
     block_music = tk.Canvas(ventana_i, bg="light cyan3", bd=5, width=400, height=100)
     block_foto = tk.Frame(ventana_i, bg="pale green1", bd=8, width=150, height=200)
-    block_l = tk.Canvas(ventana_i, bg="pale green2", bd=8, width=250, height=130)
+    block_l = tk.Frame(ventana_i, bg="pale green2", bd=8, width=250, height=130)
     musiccentertext = tk.Frame(block_music,bg="light cyan3")
 
     def cerrarVentanaInformacion():
+        global ventana_actual
         ventana_i.destroy()
+        ventana_actual = None
 
     botonCi = tk.Button(ventana_i,text="Cerrar",command= cerrarVentanaInformacion, bg="white", fg="grey60", font=("Impact", 12), relief=tk.RAISED)
 
@@ -220,14 +227,12 @@ def abrir_ventana_i():
     botonPlay.pack(side="left", padx=5)
     botonPause.pack(side="left",padx=5)
     botonstop.pack(side="left", padx=5)
-    ventana_actual = ventana_i
+    ventana_i.protocol("WM_DELETE_WINDOW", cerrarVentanaInformacion)
+
+    ventana_actual = ventana_i #Para que no haya mas de una ventana abierta
 #Ventana de Animcacion
 def abrir_ventana_an():
-    global ventana_actual    
-    
-    if ventana_actual is not None and ventana_actual.winfo_exists():
-        ventana_actual.destroy()
-        stopmusic()     #Por si se dejo la musica activa en la ventana informacion
+    global ventana_actual
 
     ventana_an = Toplevel(ventana_m)
     ventana_an.title("Animación")
@@ -243,7 +248,9 @@ def abrir_ventana_an():
     ATNvelocidad = tk.Label(block_texto, text="Ajusta la barra para configurar la velocidad",bg="olivedrab1", fg="grey60", font=("Impact", 15) )
 
     def cerraranimacion():
+        global ventana_actual
         ventana_an.destroy()
+        ventana_actual = None
 
     BotonCAN = tk.Button(ventana_an, text="Cerrar", command=cerraranimacion, bg="light cyan1",fg="grey60", font=("Impact", 12), relief=tk.RAISED)
     barravelocidad = tk.Scale(block_velocidad, from_=0, to=85, orient=tk.HORIZONTAL, length=300,tickinterval=10, bg="olivedrab1", fg="grey60", font=("Impact", 12))
@@ -290,7 +297,7 @@ def abrir_ventana_an():
         if valor_barra == 0:
             espera = 100
         else:
-            espera = int(100 - valor_barra + 1) 
+            espera = max(1, 100 - valor_barra) 
 
         block_pelotas.after(espera, mover)
 
@@ -305,7 +312,9 @@ def abrir_ventana_an():
     barravelocidad.pack()
     BotonCAN.pack()
     mover()
-    ventana_actual = ventana_an
+    ventana_an.protocol("WM_DELETE_WINDOW", cerraranimacion)
+
+    ventana_actual = ventana_an #Para que no haya mas de una ventana abierta
 
 
 
@@ -329,16 +338,17 @@ Mensaje.pack()
 BlockVentanas = tk.Frame(ventana_m, bg="aquamarine")
 BlockVentanas.pack(pady=20)
 
-botonwA = tk.Button(BlockVentanas, width=25, height=10, text="Analizador de Números", bg="tomato", fg="White", font=("Impact"), command=lambda: abrir_ventana_a())
-botonwI = tk.Button(BlockVentanas, width=25, height=10, text="Información del programador", bg="sky blue", fg="White", font=("Impact"), command=lambda: abrir_ventana_i())
-BotonwP = tk.Button(BlockVentanas, width=25, height=10, text="Animación", bg="olivedrab1", fg="White", font=("Impact"), command=lambda: abrir_ventana_an())
+botonwA = tk.Button(BlockVentanas, width=25, height=10, text="Analizador de Números", bg="tomato", fg="White", font=("Impact"), command=lambda: cambiar_ventana(abrir_ventana_a))
+botonwI = tk.Button(BlockVentanas, width=25, height=10, text="Información del programador", bg="sky blue", fg="White", font=("Impact"), command=lambda: cambiar_ventana(abrir_ventana_i))
+BotonwAN = tk.Button(BlockVentanas, width=25, height=10, text="Animación", bg="olivedrab1", fg="White", font=("Impact"), command=lambda: cambiar_ventana(abrir_ventana_an))
 
 
 botonwA.grid(row=0, column=0, padx=10)
 botonwI.grid(row=0, column=1, padx=10)
-BotonwP.grid(row=0, column=2, padx=10)
+BotonwAN.grid(row=0, column=2, padx=10)
 
 BotonCM = tk.Button(ventana_m, text="Cerrar", command=cerrarmenu, bg="white", fg="grey60", font=("Impact", 12), relief=tk.RAISED)
 BotonCM.pack(pady=5)
+ventana_m.protocol("WM_DELETE_WINDOW", cerrarmenu)
 
 ventana_m.mainloop()
