@@ -156,6 +156,7 @@ def abrir_ventana_i():
         global ventana_actual
         ventana_i.destroy()
         ventana_actual = None
+        stopmusic()
 
     botonCi = tk.Button(ventana_i,text="Cerrar",command= cerrarVentanaInformacion, bg="white", fg="grey60", font=("Impact", 12), relief=tk.RAISED)
 
